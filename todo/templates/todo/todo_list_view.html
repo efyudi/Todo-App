@@ -1,0 +1,32 @@
+{% extends "todo/base.html" %}
+
+{% block content %}
+    <ul>
+        {% for task in object_list %}
+            <li>  
+                <input id="checkbox_{{ task.pk }}" onclick="update_task_status(this)" href="{% url 'update_task' task.pk %}" value="{{ task.pk }}" type="checkbox" {% if task.option %}checked{% endif %}>
+                <label>{{ task.name }}</label>
+                <a href="{% url 'delete_task' task.pk %}" class="btn delete_btn">x</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        function update_task_status(checkbox){
+            var task_url = checkbox.getAttribute('href')
+            $.ajax({
+                url: task_url,
+                data: {
+                    'option': checkbox.checked
+                },
+                dataType: 'json',
+                success: function(){
+                    alert("Value updated to " + checkbox.checked)
+                }
+            });
+        }
+    </script>
+{% endblock %}

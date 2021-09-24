@@ -1,0 +1,16 @@
+{% extends "todo/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            {{ form|crispy }}
+        </fieldset>
+        <fieldset>
+            <button class="btn btn-info" type="submit">Add Task</button>
+        </fieldset>
+    </form>
+
+{% endblock %}
